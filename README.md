@@ -15,47 +15,29 @@ All logic gates are created from the primitive NAND gate. Here is a list of gate
  - **Multi-Bit:** Not16, And16, Or16, Mux16
  - **Multi-Way:** Or8Way, Mux4Way16, Mux8Way16, DMux4Way, DMux8Way
 
-## Arithmetic
-ALU can compute eighteen functions using a minimal hardware design. It uses 6 control bits, where each bit corresponds to a specific elementary operation.
+Example of multiplexing / demultiplexing in communications networks
+![mux_dmux](screenshots/mux_dmux.png)
 
-| control-bit | description                      |
-| ----------- | ---------------------------------|
-| **zx**          | zero the x input?                |
-| **nx**          | negate the x input?              |
-| **zy**          | zero the y input?                |
-| **ny**          | negate the y input?              |
-| **f**           | compute x+y (if == 1) or x&y (if == 0) |
-| **no**          | negate the output?               |
+## Arithmetic
+ALU (Arithmetic Logic Unit) can compute eighteen functions using a minimal hardware design. It uses 6 control bits, where each bit corresponds to a specific elementary operation.
 
 The following functions can be calculated using the control bits as follows:
 
-| #   | zx  | nx  | zy  | ny  | f   | no  | f(x,y) |
-| --- | --- | --- | --- | --- | --- | --- | ------ |
-| **1**   | 1   | 0   | 1   | 0   | 1   | 0   | 0      |
-| **2**   | 1   | 1   | 1   | 1   | 1   | 1   | 1      |
-| **3**   | 1   | 1   | 1   | 0   | 1   | 0   | -1     |
-| **4**   | 0   | 0   | 1   | 1   | 0   | 0   | x      |
-| **5**   | 1   | 1   | 0   | 0   | 0   | 0   | y      |
-| **6**   | 0   | 0   | 1   | 1   | 0   | 1   | !x     |
-| **7**   | 1   | 1   | 0   | 0   | 0   | 1   | !y     |
-| **8**   | 0   | 0   | 1   | 1   | 1   | 1   | -x     |
-| **9**   | 1   | 1   | 0   | 0   | 1   | 1   | -y     |
-| **10**  | 0   | 1   | 1   | 1   | 1   | 1   | x+1    |
-| **11**  | 1   | 1   | 0   | 1   | 1   | 1   | y+1    |
-| **12**  | 0   | 0   | 1   | 1   | 1   | 0   | x-1    |
-| **13**  | 1   | 1   | 0   | 0   | 1   | 0   | y-1    |
-| **14**  | 0   | 0   | 0   | 0   | 1   | 0   | x+y    |
-| **15**  | 0   | 1   | 0   | 0   | 1   | 1   | x-y    |
-| **16**  | 0   | 0   | 0   | 1   | 1   | 1   | y-x    |
-| **17**  | 0   | 0   | 0   | 0   | 0   | 0   | x&y    |
-| **18**  | 0   | 1   | 0   | 1   | 0   | 1   | x\|y   |
+![alu](screenshots/alu.png)
 
 ALU also outputs two status bits.
 
-| status-bit | description             |
-| ---------- | ----------------------- |
-| **zr**         | is the output zero?     |
-| **ng**         | is the output negative? |
+![alu_output](screenshots/alu_output.png)
 
 The following chips are implemented in this section:
  - HalfAdder, FullAdder, Add16, Inc16, ALU
+
+## Memory
+Storage is implemented using data flip-flops (DFF) and sequential logic. DFF implements out[t] = in[t-1]. The registers are 16 bits wide and consist of DFFs. These registers then combined to create random access memory (RAM). It allows data to be read/written from/to any address in constant time, regardless of physical location.
+
+Finally, the program counter is also implemented using a 16-bit register, which has the following functions: reset to zero, load a specific value, and increment the current value.
+
+List of implemented chips:
+- Bit, Register
+- RAM8, RAM64, RAM512, RAM4K, RAM16K
+- PC
