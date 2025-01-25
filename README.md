@@ -43,7 +43,7 @@ List of implemented chips:
 - PC
 
 # Architecture
-Bringing together all the circuitry, the computer is assembled in this section. The resulting device is a 16-bit von Neumann platform consisting of a CPU, two memory modules, and two memory-mapped I/O devices - a screen and a keyboard.
+Bringing together all the circuitry, the computer is assembled in this section. The resulting device is a 16-bit platform consisting of a CPU, two memory modules, and two memory-mapped I/O devices - a screen and a keyboard.
 
 There are two 16-bit registers A and D, where D is a data register that is designed to store values, and A provides direct memory access.
 
@@ -61,29 +61,15 @@ Examples of projects using these instructions:
 This computer has two memory banks, instruction memory and data memory. The instruction memory is implemented using a ROM chip with 32K addressable 16-bit registers. The data memory is a RAM device consisting of 32K addressable 16-bit registers with the ability to map I/O to memory.
 
 The data memory is organized with the RAM at the top, followed by I/O memory buffers for two peripherals, the 512 x 256 display and the keyboard. The data memory supports 15-bit addressing.
-<table>
-	<thead>
-		<tr>
-			<th> address </th>
-			<th> component </th>
-			<th> capacity </th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td><center>0x0000 <br> - <br> 0x3FFF</center></td>
-			<td>RAM </td>
-			<td> 16K </td>
-		</tr>
-		<tr>
-			<td><center>0x4000 <br> - <br> 0x5FFF </center></td>
-			<td> Screen </td>
-			<td> 8K </td>
-		</tr>
-		<tr>
-			<td>0x6000</td>
-			<td> Keyboard </td>
-			<td> 1 </td>
-		</tr>
-	</tbody>
-</table>
+![memory](screenshots/memory.png)
+
+## CPU
+The CPU consists of an ALU, two registers A and D, and a program counter PC. It fetches an instruction from the instruction memory and decodes it using an internal logic circuit. It then executes the instruction and writes back the data. The control bits in the image below are labeled c. Different bits go to different parts of the CPU.
+![cpu](screenshots/cpu.png)
+
+## Computer
+Finally, a computer can be realized by connecting the instruction memory, CPU, and data memory. This refers to the complete hardware that powers everything on that device.
+![computer](screenshots/computer.png)
+
+Implementations:
+- Memory, CPU, Computer
